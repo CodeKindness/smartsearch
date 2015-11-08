@@ -36,7 +36,6 @@ Rails.application.configure do
       domain: ENV['SMTP_DOMAIN'],
       :authentication => :cram_md5
   }
-  config.action_mailer.raise_delivery_errors = true
   # Send email in development mode?
   config.action_mailer.perform_deliveries = true
 
