@@ -1,4 +1,5 @@
 desc 'Syncs emails from imap service provider.'
 task :sync_mail => :environment do
-  FetchMail.call
+  result = FetchMail.call
+  puts result.inspect
 end

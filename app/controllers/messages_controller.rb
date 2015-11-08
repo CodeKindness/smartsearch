@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = Message.order(originated_at: :desc)
   end
 
   # GET /messages/1
@@ -66,7 +66,7 @@ class MessagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_message
-      @message = Message.find(params[:id])
+      @message = Message.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
