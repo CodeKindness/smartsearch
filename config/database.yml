@@ -49,13 +49,3 @@ test:
   username: smartsearch
   password:
   template: template0
-
-production:
-  adapter:  postgresql
-  host:     localhost
-  encoding: unicode
-  database: smartsearch_production
-  pool:     5
-  username: smartsearch
-  password:
-  template: template0
