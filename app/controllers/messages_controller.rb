@@ -2,13 +2,36 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   # GET /messages
-  # GET /messages.json
   def index
-    @messages = Message.order(originated_at: :desc)
+    pp @unread_counts
+    @messages = Message.with_inbox_state.order(originated_at: :desc)
+  end
+
+  # GET /messages/sent
+  def sent
+    @messages = Message.with_sent_state.order(originated_at: :desc)
+    render :index
+  end
+
+  # GET /messages/spam
+  def spam
+    @messages = Message.with_spam_state.order(originated_at: :desc)
+    render :index
+  end
+
+  # GET /messages/drafts
+  def drafts
+    @messages = Message.with_draft_state.order(originated_at: :desc)
+    render :index
+  end
+
+  # GET /messages/trash
+  def trash
+    @messages = Message.with_trash_state.order(originated_at: :desc)
+    render :index
   end
 
   # GET /messages/1
-  # GET /messages/1.json
   def show
     @messages = Message.all
     @message.read!
@@ -16,6 +39,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/new
   def new
+    @messages = Message.all
     @message = Message.new
   end
 
@@ -24,18 +48,13 @@ class MessagesController < ApplicationController
   end
 
   # POST /messages
-  # POST /messages.json
   def create
-    @message = Message.new(message_params)
+    @message = SendMail.call(message_params)
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
+    if @message.success?
+      redirect_to messages_path, notice: "Message was successfully sent to #{@message.message.to}."
+    else
+      render :new
     end
   end
 
@@ -71,6 +90,15 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:user_id, :mail_provider_id, :from, :to, :subject, :body, :originated_at)
+      {
+          user: current_user,
+          params: {
+              to: params[:message][:to],
+              cc: params[:message][:cc],
+              from: "#{current_user.nickname}@smartsearch.email",
+              subject: params[:message][:subject],
+              body: params[:message][:body]
+          }
+      }
     end
 end

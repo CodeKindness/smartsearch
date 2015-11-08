@@ -1,0 +1,8 @@
+= link_to 'Compose', '/messages/new', class: 'btn btn-primary btn-outline btn-sm'
+%hr
+.list-group.mailbox_menu
+  <a href="/messages" class="list-group-item">#{badge @unread_counts[:inbox]}<span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
+  <a href="/messages/sent" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
+  <a href="/messages/spam" class="list-group-item">#{badge @unread_counts[:spam]}<span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
+  <a href="/messages/drafts" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
+  <a href="/messages/trash" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>

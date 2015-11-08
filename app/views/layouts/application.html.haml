@@ -6,6 +6,7 @@
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Smartsearch'}"}
     = stylesheet_link_tag 'application', media: 'all'
     = stylesheet_link_tag 'print', media: 'print'
+    = stylesheet_link_tag(params[:controller], :media => 'all') if Smartsearch::Application.assets.find_asset("#{controller.controller_name}.css")
     = csrf_meta_tags
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
@@ -20,7 +21,7 @@
               = image_tag 'application-logo.png', height: 26, width: 63, alt: 'Site logo'
           %ul.header_notifications.clearfix
             %li.dropdown
-              %span.label.label-danger 8
+              %span.label.label-danger= @unread_counts[:inbox]
               <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-envelope"></i></a>
               .dropdown-menu
                 %ul
@@ -31,7 +32,7 @@
                   %li
                     <a href="#" class="btn btn-xs btn-primary btn-block">All messages</a>
             %li.dropdown#tasks_dropdown
-              %span.label.label-danger 14
+              %span.label.label-danger= nil
               <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-tasks"></i></a>
               .dropdown-menu
                 %ul
@@ -40,16 +41,16 @@
                       .label.label-warning.pull-right Medium
                       %small.text-muted YUK-21 (24.07.2014)
                     %p Lorem ipsum dolor sit amet&hellip;
-                  %li
-                    <a href="#" class="btn btn-xs btn-primary btn-block">All tasks</a>
+                  %li <a href="#" class="btn btn-xs btn-primary btn-block">All tasks</a>
             %li.dropdown
-              %span.label.label-primary 2
+              %span.label.label-primary= nil
               <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="fa fa-bell"></i></a>
               .dropdown-menu
                 %ul
                   %li
                     %p Lorem ipsum dolor sit amet&hellip;
                     %small.text-muted 20 minutes ago
+                  %li <a href="#" class="btn btn-xs btn-primary btn-block">All alerts</a>
           .header_user_actions.dropdown
             .dropdown-toggle.user_dropdown{ 'data-toggle': 'dropdown' }
               .user_avatar
@@ -92,3 +93,4 @@
           <span class="icon_menu_toggle"><i class="arrow_carrot-2left toggle_left"></i><i class="arrow_carrot-2right toggle_right" style="display:none"></i></span>
 
     = javascript_include_tag 'application'
+    = javascript_include_tag(params[:controller]) if Smartsearch::Application.assets.find_asset("#{controller.controller_name}.js")

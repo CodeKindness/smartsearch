@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   resources :contacts
-  resources :messages
+  resources :messages do
+    collection do
+      get 'sent'
+      get 'spam'
+      get 'drafts'
+      get 'trash'
+    end
+  end
   root to: 'visitors#index'
   devise_for :users
   resources :users

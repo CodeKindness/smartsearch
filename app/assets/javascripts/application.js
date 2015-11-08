@@ -13,10 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require react
-//= require react_ujs
-//= require components
-//= require application/retina.min
 //= require application/switchery.min
 //= require application/typeahead.bundle.min
 //= require application/fastclick.min

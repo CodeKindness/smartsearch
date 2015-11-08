@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   has_many :messages
 
+  validates :nickname, presence: true, uniqueness: true
+  validates :time_zone, presence: true
+
   enum role: [:user, :vip, :admin]
   after_initialize :set_default_role, :if => :new_record?
 
