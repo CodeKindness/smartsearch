@@ -1,22 +1,22 @@
 .row
   .col-md-3.col-lg-2
-    <a href="pages-mailbox_compose.html" class="btn btn-primary btn-outline btn-sm">Compose</a>
+    = link_to 'Compose', '/messages/new', class: 'btn btn-primary btn-outline btn-sm'
     %hr
     .list-group.mailbox_menu
-      <a href="pages-mailbox.html" class="active list-group-item"><span class="badge badge-danger">#{@messages.unread.count}</span><span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
+      <a href="/messages" class="active list-group-item"><span class="badge badge-danger">#{@messages.unread.count}</span><span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
+      <a href="#" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
   .col-md-9.col-lg-10
     .row
       .col-md-5.col-md-push-7
-        <input id="message_filter" type="text" class="form-control input-sm" placeholder="Search..."/>
+        = text_field_tag 'search', nil, placeholder: 'Search...', class: 'form-control input-sm', id: 'message_filter'
       .col-md-5.col-md-pull-5
         .btn-group.btn-group-sm
-          <button type="button" class="btn btn-default">Reply</button>
-          <button type="button" class="btn btn-default">Spam</button>
-          <button type="button" class="btn btn-default text-danger">Delete</button>
+          = button_tag 'Reply', type: 'button', class: 'btn btn-default'
+          = button_tag 'Spam', type: 'button', class: 'btn btn-default'
+          = button_tag 'Delete', type: 'button', class: 'btn btn-default text-danger'
     %hr
     %table.table.table-yuk2.bg-fill.toggle-arrow-tiny#mailbox_table{ 'data-page-size': '20', 'data-filter': '#message_filter' }
       %thead

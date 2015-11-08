@@ -1,20 +1,20 @@
 .row
   .col-md-3.col-lg-2
-    <a href="pages-mailbox_compose.html" class="btn btn-primary btn-outline btn-sm">Compose</a>
+    = link_to 'Compose', '/messages/new', class: 'btn btn-primary btn-outline btn-sm'
     %hr
     .list-group.mailbox_menu
       <a href="/messages" class="list-group-item"><span class="badge badge-danger">#{@messages.unread.count}</span><span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
-      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
+      <a href="#" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
+      <a href="#" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
   .col-md-9.col-lg-10
     .row.hidden-print
       .col-md-4
         .btn-group.btn-group-sm
-          <button type="button" class="btn btn-default">Reply</button>
-          <button type="button" class="btn btn-default">Spam</button>
-          <button type="button" class="btn btn-default text-danger">Delete</button>
+          = button_tag 'Reply', type: 'button', class: 'btn btn-default'
+          = button_tag 'Spam', type: 'button', class: 'btn btn-default'
+          = button_tag 'Delete', type: 'button', class: 'btn btn-default text-danger'
       .col-md-4.col-md-offset-4.text-right
         .btn-group.btn-group-sm
           <button type="button" class="btn btn-default bs_ttip" data-placement="bottom" title="Prev"><i class="fa fa-chevron-left"></i></button>
