@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.1'
 gem 'contextio', '2.0.0'
+gem 'gravatar_image_tag', '1.2.0'
 gem 'interactor', '3.1.0'
 gem 'mailgun-ruby', '1.0.3'
 gem 'rails', '4.2.3'

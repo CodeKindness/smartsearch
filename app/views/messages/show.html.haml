@@ -1,27 +1,34 @@
-%p#notice= notice
-
-%p
-  %b User:
-  = @message.user_id
-%p
-  %b Mail provider:
-  = @message.mail_provider_id
-%p
-  %b From:
-  = @message.from
-%p
-  %b To:
-  = @message.to
-%p
-  %b Subject:
-  = @message.subject
-%p
-  %b Body:
-  = @message.body
-%p
-  %b Originated at:
-  = @message.originated_at
-
-= link_to 'Edit', edit_message_path(@message)
-\|
-= link_to 'Back', messages_path
+.row
+  .col-md-3.col-lg-2
+    <a href="pages-mailbox_compose.html" class="btn btn-primary btn-outline btn-sm">Compose</a>
+    %hr
+    .list-group.mailbox_menu
+      <a href="/messages" class="list-group-item"><span class="badge badge-danger">#{@messages.unread.count}</span><span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
+  .col-md-9.col-lg-10
+    .row.hidden-print
+      .col-md-4
+        .btn-group.btn-group-sm
+          <button type="button" class="btn btn-default">Reply</button>
+          <button type="button" class="btn btn-default">Spam</button>
+          <button type="button" class="btn btn-default text-danger">Delete</button>
+      .col-md-4.col-md-offset-4.text-right
+        .btn-group.btn-group-sm
+          <button type="button" class="btn btn-default bs_ttip" data-placement="bottom" title="Prev"><i class="fa fa-chevron-left"></i></button>
+          <button type="button" class="btn btn-default bs_ttip" data-placement="bottom" title="Next"><i class="fa fa-chevron-right"></i></button>
+    %hr.hidden-print
+    .mail_details_top.clearfix
+      .mail_date
+        = l @message.originated_at, format: :short
+      .mail_user_image
+        = gravatar_image_tag(@message.from, :alt => 'Smartsearch', :gravatar => { :size => 38 })
+      .mail_user_info
+        <h2>Kathleen Schiller</h2>
+        <span class="text-muted">#{@message.from}</span>
+    .mail_details_content
+      != @message.body
+    .mail_details_send.hidden-print
+      <textarea name="mail_reply" id="mail_reply" cols="30" rows="3" class="form-control" placeholder="Start typing here to replay or forward..."></textarea>

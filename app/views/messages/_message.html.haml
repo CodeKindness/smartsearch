@@ -1,0 +1,7 @@
+%tr{ class: (message.read_at.blank? ? 'unreaded' : '') }
+  %td
+  %td <div><input type="checkbox" class="msgSelect"></div>
+  %td.mbox_star <i class="fa fa-star-o"></i>
+  %td= message.from
+  %td= link_to message.subject, message_path(message)
+  %td= message.originated_at

@@ -1,33 +1,35 @@
-%h1 Listing messages
-
-%table
-  %thead
-    %tr
-      %th User
-      %th Mail provider
-      %th From
-      %th To
-      %th Subject
-      %th Body
-      %th Originated at
-      %th
-      %th
-      %th
-
-  %tbody
-    - @messages.each do |message|
-      %tr
-        %td= message.user_id
-        %td= message.mail_provider_id
-        %td= message.from
-        %td= message.to
-        %td= message.subject
-        %td= message.body
-        %td= message.originated_at
-        %td= link_to 'Show', message
-        %td= link_to 'Edit', edit_message_path(message)
-        %td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Message', new_message_path
+.row
+  .col-md-3.col-lg-2
+    <a href="pages-mailbox_compose.html" class="btn btn-primary btn-outline btn-sm">Compose</a>
+    %hr
+    .list-group.mailbox_menu
+      <a href="pages-mailbox.html" class="active list-group-item"><span class="badge badge-danger">#{@messages.unread.count}</span><span class="menu_icon"><i class="fa fa-inbox"></i></span>Inbox</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-mail-reply"></i></span>Sent</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="badge badge-danger">52</span><span class="menu_icon"><i class="fa fa-exclamation-circle"></i></span>Spam</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-edit"></i></span>Drafts</a>
+      <a href="pages-mailbox.html" class="list-group-item"><span class="menu_icon"><i class="fa fa-trash"></i></span>Trash</a>
+  .col-md-9.col-lg-10
+    .row
+      .col-md-5.col-md-push-7
+        <input id="message_filter" type="text" class="form-control input-sm" placeholder="Search..."/>
+      .col-md-5.col-md-pull-5
+        .btn-group.btn-group-sm
+          <button type="button" class="btn btn-default">Reply</button>
+          <button type="button" class="btn btn-default">Spam</button>
+          <button type="button" class="btn btn-default text-danger">Delete</button>
+    %hr
+    %table.table.table-yuk2.bg-fill.toggle-arrow-tiny#mailbox_table{ 'data-page-size': '20', 'data-filter': '#message_filter' }
+      %thead
+        %tr
+          <th class="cw footable_toggler"></th>
+          <th class="cw"><input type="checkbox" id="msgSelectAll"></th>
+          <th class="cw"></th>
+          <th data-hide="phone,tablet">From</th>
+          <th>Subject</th>
+          <th data-hide="phone">Date</th>
+      %tbody
+        = render @messages
+      %tfoot.hide-if-no-paging
+        %tr
+          %td{ colspan: '6' }
+            <ul class="pagination pagination-sm"></ul>
