@@ -1,0 +1,14 @@
+= simple_form_for(@message) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :user_id
+    = f.input :mail_provider_id
+    = f.input :from
+    = f.input :to
+    = f.input :subject
+    = f.input :body
+    = f.input :originated_at
+
+  .form-actions
+    = f.button :submit

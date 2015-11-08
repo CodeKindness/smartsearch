@@ -1,0 +1,33 @@
+%h1 Listing messages
+
+%table
+  %thead
+    %tr
+      %th User
+      %th Mail provider
+      %th From
+      %th To
+      %th Subject
+      %th Body
+      %th Originated at
+      %th
+      %th
+      %th
+
+  %tbody
+    - @messages.each do |message|
+      %tr
+        %td= message.user_id
+        %td= message.mail_provider_id
+        %td= message.from
+        %td= message.to
+        %td= message.subject
+        %td= message.body
+        %td= message.originated_at
+        %td= link_to 'Show', message
+        %td= link_to 'Edit', edit_message_path(message)
+        %td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Message', new_message_path

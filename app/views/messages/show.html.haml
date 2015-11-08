@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @message.user_id
+%p
+  %b Mail provider:
+  = @message.mail_provider_id
+%p
+  %b From:
+  = @message.from
+%p
+  %b To:
+  = @message.to
+%p
+  %b Subject:
+  = @message.subject
+%p
+  %b Body:
+  = @message.body
+%p
+  %b Originated at:
+  = @message.originated_at
+
+= link_to 'Edit', edit_message_path(@message)
+\|
+= link_to 'Back', messages_path

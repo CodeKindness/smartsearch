@@ -16,4 +16,10 @@
 //= require react
 //= require react_ujs
 //= require components
-//= require_tree .
+//= require application/retina.min
+//= require application/switchery.min
+//= require application/typeahead.bundle.min
+//= require application/fastclick.min
+//= require application/jquery.matchHeight-min
+//= require application/jquery.mCustomScrollbar.concat.min
+//= require application/yukon_all.min

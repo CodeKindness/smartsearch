@@ -1,9 +1,14 @@
 source 'https://rubygems.org'
 ruby '2.2.1'
+gem 'contextio', '2.0.0'
+gem 'interactor', '3.1.0'
+gem 'mailgun-ruby', '1.0.3'
 gem 'rails', '4.2.3'
 gem 'react-rails', '~> 1.4.0'
+gem 'resque', '1.25.2'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'whenever', '0.9.4'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
@@ -28,6 +33,7 @@ group :development do
   gem 'spring-commands-rspec'
 end
 group :development, :test do
+  gem 'dotenv-rails', '2.0.2'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
