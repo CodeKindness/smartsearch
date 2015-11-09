@@ -36,14 +36,10 @@ class ContactsController < ApplicationController
 
   # PATCH/PUT /contacts/1
   def update
-    respond_to do |format|
-      if @contact.update(contact_params)
-        format.html { redirect_to @contact, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: @contact }
-      else
-        format.html { render :edit }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
-      end
+    if @contact.update(contact_params)
+      redirect_to @contact, notice: 'Contact was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -64,6 +60,6 @@ class ContactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:email, :company_id, :position, :first_name, :last_name)
+      params.require(:contact).permit(:company_id, :position, :first_name, :last_name, :phone_number, :linkedin_url)
     end
 end
