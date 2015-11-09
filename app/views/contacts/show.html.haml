@@ -5,7 +5,8 @@
     %p.user_profile_info= @contact.position
     %p.user_profile_info= @contact.company_id
   .col-sm-6.text-right
-    = link_to 'Edit Contact', edit_contact_path(@contact), class: 'btn btn-primary'
+    = link_to 'Message Contact', new_message_path(to: @contact.email), class: 'btn btn-primary'
+    = link_to 'Edit Contact', edit_contact_path(@contact), class: 'btn btn-default'
 %hr
 .row
   .col-md-12
