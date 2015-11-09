@@ -3,7 +3,6 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    pp @unread_counts
     @messages = Message.with_inbox_state.order(originated_at: :desc)
   end
 
