@@ -1,24 +1,9 @@
-%p#notice= notice
-
-%p
-  %b User:
-  = @contact.user_id
-%p
-  %b Email:
-  = @contact.email
-%p
-  %b Company:
-  = @contact.company_id
-%p
-  %b Position:
-  = @contact.position
-%p
-  %b First name:
-  = @contact.first_name
-%p
-  %b Last name:
-  = @contact.last_name
-
-= link_to 'Edit', edit_contact_path(@contact)
-\|
-= link_to 'Back', contacts_path
+.row
+  .col-sm-6
+    = gravatar_image_tag @contact.email, alt: @contact.first_name, gravatar: { size: 76 }, class: 'user_profile_img'
+    %h1.user_profile_name= @contact.full_name
+    %p.user_profile_info= @contact.position
+    %p.user_profile_info= @contact.company_id
+%hr
+.row
+  .col-md-12

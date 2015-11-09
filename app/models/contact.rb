@@ -8,6 +8,12 @@ class Contact < ActiveRecord::Base
   validates :email, presence: true
   validates :email, uniqueness: { scope: :user_id }
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  protected
+
   def token
     loop do
       random_token = SecureRandom.urlsafe_base64(nil, false)

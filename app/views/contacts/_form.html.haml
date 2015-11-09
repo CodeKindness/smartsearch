@@ -1,13 +1,41 @@
-= simple_form_for(@contact) do |f|
+= simple_form_for(@contact, html: { class: 'form-horizontal', role: 'form' }) do |f|
   = f.error_notification
-
-  .form-inputs
-    = f.input :user_id
-    = f.input :email
-    = f.input :company_id
-    = f.input :position
-    = f.input :first_name
-    = f.input :last_name
-
-  .form-actions
-    = f.button :submit
+  %h3.heading_a
+    %span.heading_text Company info
+  .form-group
+    = f.label :company_id, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :company_id, class: 'form-control'
+  .form-group
+    = f.label :position, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :position, class: 'form-control'
+  %h3.heading_a
+    %span.heading_text General info
+  .form-group
+    = f.label :first_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :first_name, class: 'form-control'
+  .form-group
+    = f.label :last_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :last_name, class: 'form-control'
+  %h3.heading_a
+    %span.heading_text Contact info
+  .form-group
+    = f.label :email, class: 'col-sm-2 control-label'
+    .col-sm-10
+      <input type="text" class="form-control" id="contact_email" value="#{@contact.email}" disabled="true">
+  .form-group
+    = f.label :phone_number, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :phone_number, class: 'form-control'
+  .form-group
+    = f.label :linkedin, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :linkedin_url, class: 'form-control'
+  %hr
+  .form-group
+    .col-sm-10.col-sm-offset-2
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'Cancel', @contact, class: 'btn btn-default'

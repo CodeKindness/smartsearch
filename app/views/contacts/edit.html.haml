@@ -1,7 +1,10 @@
-%h1 Editing contact
-
-= render 'form'
-
-= link_to 'Show', @contact
-\|
-= link_to 'Back', contacts_path
+.row
+  .col-sm-6
+    = gravatar_image_tag @contact.email, alt: @contact.first_name, gravatar: { size: 76 }, class: 'user_profile_img'
+    %h1.user_profile_name= @contact.full_name
+    %p.user_profile_info= @contact.position
+    %p.user_profile_info= @contact.company_id
+%hr
+.row
+  .col-md-12
+    = render 'form'
