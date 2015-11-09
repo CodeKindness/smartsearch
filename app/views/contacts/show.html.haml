@@ -4,6 +4,8 @@
     %h1.user_profile_name= @contact.full_name
     %p.user_profile_info= @contact.position
     %p.user_profile_info= @contact.company_id
+  .col-sm-6.text-right
+    = link_to 'Edit Contact', edit_contact_path(@contact), class: 'btn btn-primary'
 %hr
 .row
   .col-md-12
