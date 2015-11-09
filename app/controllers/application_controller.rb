@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   around_filter :user_time_zone, if: :current_user
   before_action :set_locale
   before_action :current_user
-  around_filter :set_unread_counts, if: :current_user
+  before_action :set_unread_counts, if: :current_user
 
   protected
 
