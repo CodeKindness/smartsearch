@@ -8,19 +8,19 @@
       -#Should be able to use: @current_user.companies?
       = f.input_field :name, class: 'form-control'
   .form-group
-    = f.label :address, class: 'col-sm-2 control-label'
-    .col-sm-10
-      = f.input_field :address, class: 'form-control'
-  .form-group
-    = f.label :rating, class: 'col-sm-2 control-label'
-    .col-sm-10
-      != f.input_field :rating, collection: [['★★★★★ Excellent',5],['★★★★☆ Good',4],['★★★☆☆ Okay',3],['★★☆☆☆ Poor',2],['★☆☆☆☆ Awful',1]], class: 'form-control'
-  %h3.heading_a
-    %span.heading_text Contact info
-  .form-group
     = f.label :contact_id, 'Primary Contact', class: 'col-sm-2 control-label'
     .col-sm-10
       = f.input_field :contact_id, collection: @current_user.contacts.map{|c|["#{c.full_name} <#{c.email}>", c.id]}, include_blank: false, prompt: '-- Select Primary Contact --', class: 'form-control'
+  .form-group
+    = f.label :rating, class: 'col-sm-2 control-label'
+    .col-sm-10
+      != f.input_field :rating, collection: [['★★★★★ Excellent',5],['★★★★☆ Good',4],['★★★☆☆ Okay',3],['★★☆☆☆ Poor',2],['★☆☆☆☆ Awful',1]], prompt: '-- Select Rating --', class: 'form-control'
+  %h3.heading_a
+    %span.heading_text Contact info
+  .form-group
+    = f.label :address, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.input_field :address, class: 'form-control'
   .form-group
     = f.label :website_url, class: 'col-sm-2 control-label'
     .col-sm-10

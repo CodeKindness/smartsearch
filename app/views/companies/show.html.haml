@@ -1,33 +1,12 @@
-%p#notice= notice
-
-%p
-  %b Slug:
-  = @company.slug
-%p
-  %b User:
-  = @company.user_id
-%p
-  %b Contact:
-  = @company.contact_id
-%p
-  %b Order:
-  = @company.order
-%p
-  %b Rating:
-  = @company.rating
-%p
-  %b Name:
-  = @company.name
-%p
-  %b Address:
-  = @company.address
-%p
-  %b Website url:
-  = @company.website_url
-%p
-  %b Linkedin url:
-  = @company.linkedin_url
-
-= link_to 'Edit', edit_company_path(@company)
-\|
-= link_to 'Back', companies_path
+.row
+  .col-sm-6
+    = gravatar_image_tag 'contact@smartsearch.email', alt: 'Company logo', gravatar: { size: 76 }, class: 'user_profile_img'
+    %h1.user_profile_name= @company.name
+    %p.user_profile_info= @company.address
+    %p.user_profile_info= @company.website_url
+  .col-sm-6.text-right
+    -#= link_to 'Message Contact', new_message_path(to: @contact.email), class: 'btn btn-primary'
+    -#= link_to 'Edit Contact', edit_contact_path(@contact), class: 'btn btn-default'
+%hr
+.row
+  .col-md-12

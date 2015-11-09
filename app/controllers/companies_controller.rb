@@ -2,13 +2,11 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
 
   # GET /companies
-  # GET /companies.json
   def index
-    @companies = Company.all
+    @companies = current_user.companies.all
   end
 
   # GET /companies/1
-  # GET /companies/1.json
   def show
   end
 
@@ -22,23 +20,17 @@ class CompaniesController < ApplicationController
   end
 
   # POST /companies
-  # POST /companies.json
   def create
-    @company = Company.new(company_params)
+    @company = current_user.companies.new(company_params)
 
-    respond_to do |format|
-      if @company.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
-        format.json { render :show, status: :created, location: @company }
-      else
-        format.html { render :new }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+    if @company.save
+      redirect_to companies_path, notice: 'Company was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /companies/1
-  # PATCH/PUT /companies/1.json
   def update
     respond_to do |format|
       if @company.update(company_params)
@@ -52,7 +44,6 @@ class CompaniesController < ApplicationController
   end
 
   # DELETE /companies/1
-  # DELETE /companies/1.json
   def destroy
     @company.destroy
     respond_to do |format|
@@ -62,13 +53,14 @@ class CompaniesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_company
-      @company = Company.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def company_params
-      params.require(:company).permit(:slug, :user_id, :contact_id, :order, :rating, :name, :address, :website_url, :linkedin_url)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_company
+    @company = current_user.companies.friendly.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def company_params
+    params.require(:company).permit(:contact_id, :rating, :name, :address, :website_url, :linkedin_url)
+  end
 end
