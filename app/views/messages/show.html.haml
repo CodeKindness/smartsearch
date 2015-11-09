@@ -19,8 +19,8 @@
       .mail_user_image
         = gravatar_image_tag(@message.from, :alt => 'Smartsearch', :gravatar => { :size => 38 })
       .mail_user_info
-        <h2>Kathleen Schiller</h2>
-        <span class="text-muted">#{@message.from}</span>
+        %h2= @message.contact.full_name
+        %span.text-muted= @message.from
     .mail_details_content
       != @message.body
     .mail_details_send.hidden-print

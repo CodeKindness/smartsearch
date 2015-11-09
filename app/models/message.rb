@@ -3,7 +3,6 @@ class Message < ActiveRecord::Base
   friendly_id :token
 
   validates :user_id, presence: true
-  validates :contact_id, presence: true
   validates :from, presence: true
   validates :to, presence: true
 
@@ -36,10 +35,11 @@ class Message < ActiveRecord::Base
 
   scope :unread, -> { where(read_at: nil) }
 
-  before_create :create_contact
+  after_create :create_contact
 
   def create_contact
-    self.contact_id = Contact.find_or_create(user_id: user_id, email: (workflow_state == 'sent' ? to : from)).id
+    # OPTIMIZE: Should maybe go in controller?
+    self.update_attributes contact: Contact.find_or_create(user_id: user_id, email: (workflow_state == 'sent' ? to : from))
   end
 
   def read!
