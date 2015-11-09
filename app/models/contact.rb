@@ -4,6 +4,7 @@ class Contact < ActiveRecord::Base
 
   belongs_to :user
   has_many :companies
+  has_many :messages
 
   validates :user_id, presence: true
   validates :email, presence: true

@@ -3,6 +3,7 @@ class Message < ActiveRecord::Base
   friendly_id :token
 
   validates :user_id, presence: true
+  validates :contact_id, presence: true
   validates :from, presence: true
   validates :to, presence: true
 
@@ -30,14 +31,15 @@ class Message < ActiveRecord::Base
     end
   end
 
+  belongs_to :contact
   belongs_to :user
 
   scope :unread, -> { where(read_at: nil) }
 
-  after_create :create_contact
+  before_create :create_contact
 
   def create_contact
-    Contact.create(user_id: user_id, email: (workflow_state == 'sent' ? to : from))
+    self.contact_id = Contact.find_or_create(user_id: user_id, email: (workflow_state == 'sent' ? to : from)).id
   end
 
   def read!
