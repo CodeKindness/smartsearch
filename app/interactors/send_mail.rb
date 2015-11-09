@@ -10,7 +10,8 @@ class SendMail
   # @option params [subject] String
   # @option params [body] String
   def call
-    ContactMailer.open_email(context.params).deliver
+    params = context.params.dup
+    ContactMailer.open_email(params).deliver_now
     context.message = context.user.messages.create context.params.merge(workflow_state: Message.states(:sent), originated_at: Time.now.utc)
   end
 end

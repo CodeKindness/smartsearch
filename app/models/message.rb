@@ -19,8 +19,15 @@ class Message < ActiveRecord::Base
     state :draft do
       event :send, :transitions_to => :sent
     end
-    state :sent
-    state :trash
+    state :sent do
+      event :trash, transitions_to: :trash
+    end
+    state :trash do
+      event :inbox, transitions_to: :inbox
+      event :sent, transitions_to: :sent
+      event :spam, transitions_to: :spam
+      event :draft, transitions_to: :draft
+    end
   end
 
   belongs_to :user
@@ -30,7 +37,7 @@ class Message < ActiveRecord::Base
   after_create :create_contact
 
   def create_contact
-    Contact.create(user_id: user_id, email: from)
+    Contact.create(user_id: user_id, email: (workflow_state == 'sent' ? to : from))
   end
 
   def read!
