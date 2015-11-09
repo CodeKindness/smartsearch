@@ -5,5 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
+User.create email: 'contact@smartsearch.email', password: 'password', password_confirmation: 'password', nickname: 'michael', time_zone: 'Central Time (US & Canada)'
+puts 'CREATED USER FOR: michael@smartsearch.email'
