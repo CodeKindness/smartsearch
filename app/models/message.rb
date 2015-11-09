@@ -38,7 +38,7 @@ class Message < ActiveRecord::Base
   end
 
   def self.states(state)
-    Message.workflow_spec.states.keys(state) || Message.workflow_spec.states.keys.first
+    Message.workflow_spec.states.keys.include?(state) ? state : Message.workflow_spec.states.keys.first
   end
 
   def self.unread_counts(user)
