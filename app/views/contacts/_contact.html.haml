@@ -2,6 +2,6 @@
   = link_to contact do
     = gravatar_image_tag contact.email, class: 'img-circle', :alt => contact.email, :gravatar => { :size => 38 }
     %span.contact_content
-      %h2= contact.full_name || 'add name'
-      %span.text-muted= contact.company_id || 'add company'
+      %h2= contact.full_name || 'No name'
+      %span.text-muted= contact.company_id || 'No company'
       %small.text-muted= contact.email

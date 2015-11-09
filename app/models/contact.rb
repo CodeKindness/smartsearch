@@ -9,6 +9,7 @@ class Contact < ActiveRecord::Base
   validates :email, uniqueness: { scope: :user_id }
 
   def full_name
+    return nil if first_name.nil? && last_name.nil?
     "#{first_name} #{last_name}"
   end
 
