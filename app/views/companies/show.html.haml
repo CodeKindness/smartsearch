@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Slug:
+  = @company.slug
+%p
+  %b User:
+  = @company.user_id
+%p
+  %b Contact:
+  = @company.contact_id
+%p
+  %b Order:
+  = @company.order
+%p
+  %b Rating:
+  = @company.rating
+%p
+  %b Name:
+  = @company.name
+%p
+  %b Address:
+  = @company.address
+%p
+  %b Website url:
+  = @company.website_url
+%p
+  %b Linkedin url:
+  = @company.linkedin_url
+
+= link_to 'Edit', edit_company_path(@company)
+\|
+= link_to 'Back', companies_path

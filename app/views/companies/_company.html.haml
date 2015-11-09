@@ -1,0 +1,7 @@
+%li.contact_item{ 'data-groups': '["Goodwin-Friesen"]', 'data-name': 'Prof. Theron Buckridge', 'data-company': 'Goodwin-Friesen' }
+  = link_to company do
+    = gravatar_image_tag 'contact@smartsearch.email', class: 'img-circle', :alt => 'Company', :gravatar => { :size => 38 }
+    %span.contact_content
+      %h2= company.name
+      %span.text-muted= company.contact.email
+      %small.text-muted= company.website_url
