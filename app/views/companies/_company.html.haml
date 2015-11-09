@@ -3,5 +3,4 @@
     = gravatar_image_tag 'contact@smartsearch.email', class: 'img-circle', :alt => 'Company', :gravatar => { :size => 38 }
     %span.contact_content
       %h2= company.name
-      %span.text-muted= company.contact.email
-      %small.text-muted= company.website_url
+      %span.text-muted!= rating_guide(company.rating)

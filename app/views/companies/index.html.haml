@@ -5,11 +5,11 @@
         = link_to 'Create Company', new_company_path, class: 'btn btn-primary'
     .row
       .col-sm-4.col-md-3
-        = select_tag :company_id, options_for_select([['McDonalds',1]]), prompt: '-- Select Company --', id: 'contactList_filter', class: 'form-control input-sm'
+        = select_tag :company_id, options_for_select(@current_user.companies.map{|c|[c.name,c.slug]}), prompt: '-- Select Company --', id: 'contactList_filter', class: 'form-control input-sm'
       .col-sm-4.col-md-3
-        = select_tag :sortby, options_for_select([['Name','name']]), prompt: '-- Sort by --', id: 'contactList_sort', class: 'form-control input-sm'
+        = select_tag :sortby, options_for_select([['Name','name'],['Rank','rank']]), prompt: '-- Sort by --', id: 'contactList_sort', class: 'form-control input-sm'
       .col-sm-4.col-md-3
-        = text_field_tag :user, nil, id: 'contactList_search', class: 'form-control input-sm', placeholder: 'Find user...'
+        = text_field_tag :user, nil, id: 'contactList_search', class: 'form-control input-sm', placeholder: 'Find company...'
     %hr
     %ul.contact_list
       = render @companies

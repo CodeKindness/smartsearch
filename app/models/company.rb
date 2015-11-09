@@ -3,6 +3,7 @@ class Company < ActiveRecord::Base
   friendly_id :token
 
   belongs_to :user
+  belongs_to :contact
 
   validates :user_id, presence: true
   validates :name, presence: true
