@@ -3,42 +3,40 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = Message.with_inbox_state.order(originated_at: :desc)
+    @messages = current_user.messages.with_inbox_state.order(originated_at: :desc)
   end
 
   # GET /messages/sent
   def sent
-    @messages = Message.with_sent_state.order(originated_at: :desc)
+    @messages = current_user.messages.with_sent_state.order(originated_at: :desc)
     render :index
   end
 
   # GET /messages/spam
   def spam
-    @messages = Message.with_spam_state.order(originated_at: :desc)
+    @messages = current_user.messages.with_spam_state.order(originated_at: :desc)
     render :index
   end
 
   # GET /messages/drafts
   def drafts
-    @messages = Message.with_draft_state.order(originated_at: :desc)
+    @messages = current_user.messages.with_draft_state.order(originated_at: :desc)
     render :index
   end
 
   # GET /messages/trash
   def trash
-    @messages = Message.with_trash_state.order(originated_at: :desc)
+    @messages = current_user.messages.with_trash_state.order(originated_at: :desc)
     render :index
   end
 
   # GET /messages/1
   def show
-    @messages = Message.all
     @message.read!
   end
 
   # GET /messages/new
   def new
-    @messages = Message.all
     @message = Message.new
   end
 
@@ -83,7 +81,7 @@ class MessagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_message
-    @message = Message.friendly.find(params[:id])
+    @message = current_user.messages.friendly.find(params[:id])
   end
 
   def message_params

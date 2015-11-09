@@ -2,6 +2,8 @@ class Contact < ActiveRecord::Base
   extend FriendlyId
   friendly_id :token
 
+  belongs_to :user
+
   validates :user_id, presence: true
   validates :email, presence: true
   validates :email, uniqueness: { scope: :user_id }

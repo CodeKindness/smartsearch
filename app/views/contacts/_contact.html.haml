@@ -1,0 +1,7 @@
+%li.contact_item{ 'data-groups': '["Goodwin-Friesen"]', 'data-name': 'Prof. Theron Buckridge', 'data-company': 'Goodwin-Friesen' }
+  = link_to contact do
+    = gravatar_image_tag contact.email, class: 'img-circle', :alt => contact.email, :gravatar => { :size => 38 }
+    %span.contact_content
+      %h2= contact.first_name || 'add name'
+      %span.text-muted= contact.company_id || 'add company'
+      %small.text-muted= contact.email

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :contacts
   has_many :messages
 
   validates :nickname, presence: true, uniqueness: true
