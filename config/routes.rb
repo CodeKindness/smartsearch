@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'spam'
       get 'drafts'
       get 'trash'
+      put 'ajax_update_company'
     end
   end
   root to: 'visitors#index'

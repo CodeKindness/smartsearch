@@ -20,17 +20,17 @@
         = gravatar_image_tag(@message.from, :alt => 'Smartsearch', :gravatar => { :size => 38 })
       .mail_user_info
         %h2= @message.contact.full_name
-        %span.text-muted= @message.company.nil? ? 'Add company' : @message.company.name
+        %span.text-muted= link_to (@message.company.nil? ? 'Add company' : @message.company.name), '#', class: 'editable', id: 'company_id', 'data-type': 'select', 'data-pk': @message.slug, 'data-value': @message.company_id, 'data-source': '/companies'
     .mail_details_content
       .mail-header-collapse
         <a class="small pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Message Details <i class="fa fa-caret-down"></i></a>
       .collapse#collapseExample
         %p.mail-header
-          %strong From:
-          = @message.from
-        %p.mail-header
           %strong To:
           = @message.to
+        %p.mail-header
+          %strong From:
+          = @message.from
         %p.mail-header
           %strong Subject:
           = @message.subject

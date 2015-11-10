@@ -3,6 +3,7 @@
 // You can use CoffeeScript in this file: http://coffeescript.org/
 //= require 'application/summernote.min'
 //= require 'application/jquery.autosize.min'
+//= require 'application/bootstrap-editable.min'
 
 $(function() {
   $('#wysiwyg_compose').summernote({
@@ -10,4 +11,11 @@ $(function() {
   });
 
   yukon_textarea_autosize.init();
+
+  $.fn.editable.defaults.ajaxOptions = {type: "PUT", dataType: 'json'};
+  $.fn.editable.defaults.mode = 'inline';
+
+  $('.editable').editable({
+    url: '/messages/ajax_update_company'
+  });
 });

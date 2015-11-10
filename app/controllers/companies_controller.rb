@@ -2,8 +2,9 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
 
   # GET /companies
+  # GET /companies.json
   def index
-    @companies = current_user.companies.all
+    @companies = current_user.companies
   end
 
   # GET /companies/1

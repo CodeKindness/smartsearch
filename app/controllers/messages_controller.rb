@@ -77,6 +77,15 @@ class MessagesController < ApplicationController
     end
   end
 
+  def ajax_update_company
+    message = current_user.messages.friendly.find(params[:pk])
+    if message.update(params[:name] => params[:value])
+      render json: {}, status: 200
+    else
+      render json: message.errors.full_messages.join(', '), status: 500
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
