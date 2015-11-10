@@ -1,0 +1,22 @@
+= form_tag do
+  .mail-filter
+    .heading_a
+      .heading_text <a class="small" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">FILTER <i class="fa fa-caret-down"></i></a>
+    .collapse#collapseExample
+      .form-group
+        -#= label_tag 'company', 'Company', class: 'small'
+        = select '', 'company', @current_user.companies.map{|c|[c.name,c.slug]}, { prompt: '-- Select Company --' }, { class: 'form-control' }
+      .form-group
+        -#= label_tag 'contact', 'Contact', class: 'small'
+        = select '', 'contact', @current_user.contacts.map{|c|[c.full_name || c.email,c.slug]}, { prompt: '-- Select Contact --' }, { class: 'form-control' }
+      .form-group
+        .checkbox
+          = label_tag 'starred' do
+            = check_box_tag 'starred'
+            %span Starred
+        .checkbox
+          = label_tag 'unread' do
+            = check_box_tag 'unread'
+            %span Unread
+      .actions
+        = button_tag 'Update', type: 'submit', class: 'btn btn-primary'

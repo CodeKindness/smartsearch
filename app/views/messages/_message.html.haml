@@ -1,6 +1,6 @@
 %tr{ class: (%w(inbox spam trash).include?(message.workflow_state) && message.read_at.blank? ? 'unreaded' : '') }
   %td
-  %td <div><input type="checkbox" class="msgSelect"></div>
+  %td <div><input type="checkbox" class="msgSelect" value="#{message.slug}"></div>
   %td.mbox_star <i class="fa fa-star-o"></i>
   %td= message.from
   %td= link_to message.subject, message_path(message)

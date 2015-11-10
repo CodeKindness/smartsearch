@@ -33,4 +33,6 @@ $(function() {
   $('.editable').editable({
     url: '/messages/ajax_update'
   });
+
+  yukon_mailbox.init();
 });
