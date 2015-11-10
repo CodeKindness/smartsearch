@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
+ruby '2.2.1'
 gem 'contextio', '2.0.0'
 gem 'friendly_id', '5.1.0'
 gem 'gravatar_image_tag', '1.2.0'
