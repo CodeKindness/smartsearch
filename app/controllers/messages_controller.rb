@@ -77,7 +77,7 @@ class MessagesController < ApplicationController
     end
   end
 
-  def ajax_update_company
+  def ajax_update
     message = current_user.messages.friendly.find(params[:pk])
     if message.update(params[:name] => params[:value])
       render json: {}, status: 200
