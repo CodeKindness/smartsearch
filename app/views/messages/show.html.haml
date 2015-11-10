@@ -34,6 +34,9 @@
         %p.mail-header
           %strong Subject:
           = @message.subject
+        %p.mail-header
+          %strong Origin:
+          = l @message.originated_at, format: :long
         %hr
       != @message.body
     .mail_details_send.hidden-print
