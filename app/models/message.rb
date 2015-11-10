@@ -29,6 +29,7 @@ class Message < ActiveRecord::Base
     end
   end
 
+  belongs_to :company
   belongs_to :contact
   belongs_to :user
 

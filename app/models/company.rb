@@ -3,8 +3,9 @@ class Company < ActiveRecord::Base
   friendly_id :token
 
   has_and_belongs_to_many :contacts, join_table: :companies_contacts
-  belongs_to :user
   belongs_to :contact
+  belongs_to :user
+  has_many :messages
 
   validates :user_id, presence: true
   validates :name, presence: true
