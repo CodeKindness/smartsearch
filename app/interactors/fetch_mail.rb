@@ -1,6 +1,16 @@
 class FetchMail
   include Interactor
 
+  before do
+    context.messages = []
+  end
+
+  # Sync messages on Context.io
+  # Import mail provider messages
+  # Save imported messages
+  # Delete mail provider message from saved
+  # or deliver notification to sender for unknown user
+  # @return [Context::messages] list of successfully imported messages
   def call
     messages = MailProvider::Account.new.messages!
     messages.each do |message|
@@ -8,6 +18,7 @@ class FetchMail
       if user.present?
         new_msg = user.messages.new message_params(message)
         if new_msg.save
+          context.messages << new_msg
           MailProvider::Message.new(new_msg.mail_provider_id).delete
         end
       else
