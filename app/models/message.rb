@@ -2,6 +2,8 @@ class Message < ActiveRecord::Base
   extend FriendlyId
   friendly_id :token
 
+  acts_as_nested_set
+
   validates :from, presence: true
   validates :to, presence: true
 

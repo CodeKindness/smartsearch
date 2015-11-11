@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110033835) do
+ActiveRecord::Schema.define(version: 20151111071435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,9 +77,17 @@ ActiveRecord::Schema.define(version: 20151110033835) do
     t.string   "workflow_state"
     t.integer  "contact_id"
     t.integer  "company_id"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
   add_index "messages", ["company_id"], name: "index_messages_on_company_id", using: :btree
+  add_index "messages", ["depth"], name: "index_messages_on_depth", using: :btree
+  add_index "messages", ["lft"], name: "index_messages_on_lft", using: :btree
+  add_index "messages", ["parent_id"], name: "index_messages_on_parent_id", using: :btree
+  add_index "messages", ["rgt"], name: "index_messages_on_rgt", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
