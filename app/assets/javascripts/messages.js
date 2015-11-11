@@ -14,7 +14,7 @@ $(function() {
 
   $('#message_body').on('click', function(){
     $(this).summernote({
-      height: 300
+      focus: true
     });
   });
 
