@@ -12,6 +12,12 @@ $(function() {
     height: 300
   });
 
+  $('#message_body').on('click', function(){
+    $(this).summernote({
+      height: 300
+    });
+  });
+
   yukon_textarea_autosize.init();
 
   $.fn.editable.defaults.ajaxOptions = {type: "PUT", dataType: 'json'};

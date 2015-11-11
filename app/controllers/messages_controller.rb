@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_message, only: [:respond, :show, :edit, :update, :destroy]
 
   # GET /messages
   def index
@@ -30,9 +30,10 @@ class MessagesController < ApplicationController
     render :index
   end
 
-  # GET /messages/1
+  # GET /messages/:id
   def show
     @message.read!
+    @messages = @message.root? ? @message.self_and_descendants : @message.self_and_ancestors.reverse
   end
 
   # GET /messages/new
@@ -40,18 +41,30 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  # GET /messages/1/edit
+  # GET /messages/:id/edit
   def edit
   end
 
   # POST /messages
   def create
-    @message = SendMail.call(message_params)
+    @context = SendMail.call(message_params)
 
-    if @message.success?
-      redirect_to messages_path, notice: "Message was successfully sent to #{@message.message.to}."
+    if @context.success?
+      redirect_to messages_path, notice: "Message was successfully sent to #{@context.message.to}."
     else
       render :new
+    end
+  end
+
+  # POST /messages/:id
+  def respond
+    @context = SendMail.call(response_params)
+
+    if @context.success?
+      redirect_to messages_path, notice: "Message was successfully sent to #{@context.message.to}."
+    else
+      flash.now[:message] = "Problem sending message: #{@context.message}"
+      render :show
     end
   end
 
@@ -68,7 +81,7 @@ class MessagesController < ApplicationController
     end
   end
 
-  # DELETE /messages/1
+  # DELETE /messages/:id
   def destroy
     @message.destroy
     respond_to do |format|
@@ -79,6 +92,7 @@ class MessagesController < ApplicationController
 
   def ajax_update
     message = current_user.messages.friendly.find(params[:pk])
+    pp message.self_and_descendants
     if message.update(params[:name] => params[:value])
       render json: {}, status: 200
     else
@@ -101,6 +115,19 @@ class MessagesController < ApplicationController
             cc: params[:message][:cc],
             from: "#{current_user.nickname}@smartsearch.email",
             subject: params[:message][:subject],
+            body: params[:message][:body]
+        }
+    }
+  end
+
+  def response_params
+    {
+        user: current_user,
+        origin: @message,
+        params: {
+            to: @message.to,
+            from: "#{current_user.nickname}@smartsearch.email",
+            subject: "Re: #{@message.subject}",
             body: params[:message][:body]
         }
     }

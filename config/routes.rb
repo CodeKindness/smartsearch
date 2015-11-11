@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :companies
   resources :contacts
   resources :messages do
+    member do
+      post '', action: 'respond', as: :response
+    end
     collection do
       get 'sent'
       get 'spam'

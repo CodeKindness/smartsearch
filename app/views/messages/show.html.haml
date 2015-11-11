@@ -22,22 +22,33 @@
         %h2= @message.contact.full_name
         %span.text-muted= link_to (@message.company.nil? ? 'Add company' : @message.company.name), '#', class: 'editable', id: 'company_id', 'data-type': 'select', 'data-pk': @message.slug, 'data-value': @message.company_id, 'data-source': '/companies'
     .mail_details_content
-      .mail-header-collapse
-        <a class="small pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Message Details <i class="fa fa-caret-down"></i></a>
-      .collapse#collapseExample
-        %p.mail-header
-          %strong To:
-          = @message.to
-        %p.mail-header
-          %strong From:
-          = @message.from
-        %p.mail-header
-          %strong Subject:
-          = @message.subject
-        %p.mail-header
-          %strong Origin:
-          = l @message.originated_at, format: :long
-        %hr
-      != @message.body
+      - @messages.each_with_index do |message, i|
+        - if i > 0
+          %hr
+        .mail-header-collapse
+          <a class="small pull-right" data-toggle="collapse" href="#collapse-#{message.id}" aria-expanded="false" aria-controls="collapseExample">Message Details <i class="fa fa-caret-down"></i></a>
+        .collapse{ id: "collapse-#{message.id}" }
+          %p.mail-header
+            %strong To:
+            = message.to
+          %p.mail-header
+            %strong From:
+            = message.from
+          %p.mail-header
+            %strong Subject:
+            = message.subject
+          %p.mail-header
+            %strong Origin:
+            = l message.originated_at, format: :long
+          %hr
+        - if i > 0
+          .text-muted
+            != message.body
+        - else
+          != message.body
     .mail_details_send.hidden-print
-      <textarea name="mail_reply" id="mail_reply" cols="30" rows="3" class="form-control textarea_auto" placeholder="Start typing here to replay or forward..."></textarea>
+      = form_tag response_message_path, id: 'message_respond' do
+        = text_field_tag :message_id, @message.slug, type: :hidden
+        <textarea name="message[body]" id="message_body" cols="30" rows="3" class="form-control" placeholder="Start typing here to replay or forward..."></textarea>
+        %br
+        = button_tag 'Reply', type: 'submit', class: 'btn btn-primary'
