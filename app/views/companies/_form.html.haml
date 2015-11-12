@@ -29,8 +29,8 @@
     .col-sm-2
     .col-sm-10
       = f.label :auto_assigns, class: '' do
-        = f.checkbox :auto_assigns
-        Auto assign new contacts and messages to this company
+        = f.input_field :auto_assigns, as: :boolean
+        Auto assign new contacts and messages based on website URL
   .form-group
     = f.label :linkedin_url, 'Linkedin URL', class: 'col-sm-2 control-label'
     .col-sm-10
