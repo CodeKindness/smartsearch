@@ -8,9 +8,9 @@
       -#Should be able to use: @current_user.companies?
       = f.input_field :name, class: 'form-control'
   .form-group
-    = f.label :contact_id, 'Primary Contact', class: 'col-sm-2 control-label'
+    = f.label :primary_contact_id, 'Primary Contact', class: 'col-sm-2 control-label'
     .col-sm-10
-      = f.input_field :contact_id, collection: @current_user.contacts.map{|c|["#{c.full_name} <#{c.email}>", c.id]}, include_blank: false, prompt: '-- Select Primary Contact --', class: 'form-control'
+      = f.input_field :primary_contact_id, collection: @current_user.contacts.map{|c|["#{c.full_name} <#{c.email}>", c.id]}, include_blank: false, prompt: '-- Select Primary Contact --', class: 'form-control'
   .form-group
     = f.label :rating, class: 'col-sm-2 control-label'
     .col-sm-10
@@ -25,6 +25,12 @@
     = f.label :website_url, class: 'col-sm-2 control-label'
     .col-sm-10
       = f.phone_field :website_url, class: 'form-control', placeholder: 'http://domain.com'
+  .form-group
+    .col-sm-2
+    .col-sm-10
+      = f.label :auto_assigns, class: '' do
+        = f.checkbox :auto_assigns
+        Auto assign new contacts and messages to this company
   .form-group
     = f.label :linkedin_url, 'Linkedin URL', class: 'col-sm-2 control-label'
     .col-sm-10

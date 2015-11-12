@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111071435) do
+ActiveRecord::Schema.define(version: 20151112034717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,13 @@ ActiveRecord::Schema.define(version: 20151111071435) do
     t.string   "address"
     t.string   "website_url"
     t.string   "linkedin_url"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "auto_assigns",       default: false
+    t.integer  "primary_contact_id"
   end
+
+  add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
 
   create_table "companies_contacts", id: false, force: :cascade do |t|
     t.integer "company_id", null: false
