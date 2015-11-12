@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'dashboard', to: 'dashboard#index'
   get 'profile', to: 'devise/registrations#edit'
   get 'calendar', to: 'calendar#index'
   resources :companies

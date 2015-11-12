@@ -1,0 +1,39 @@
+.row
+  .col-lg-3.col-sm-6
+    .info_box_var_1.box_bg_a
+      .info_box_body
+        <span class="info_box_icon fa fa-building"></span>
+        <span class="countUpMe" data-endval="#{@count[:companies]}">#{@count[:companies]}</span>
+      .info_box_footer
+        Companies
+  .col-lg-3.col-sm-6
+    .info_box_var_1.box_bg_b
+      .info_box_body
+        <span class="info_box_icon fa fa-envelope"></span>
+        <span class="countUpMe" data-endval="#{@count[:incoming]}">#{@count[:incoming]}</span> /
+        <span class="countUpMe" data-endval="#{@count[:outgoing]}">#{@count[:outgoing]}</span>
+      .info_box_footer
+        Incoming / Outgoing
+  .col-lg-3.col-sm-6
+    .info_box_var_1.box_bg_c
+      .info_box_body
+        <i class="info_box_icon fa fa-taxi"></i>
+        <span class="countUpMe" data-endval="#{@count[:interviews]}">#{@count[:interviews]}</span>
+      .info_box_footer
+        Interviews
+  .col-lg-3.col-sm-6
+    .info_box_var_1.box_bg_d
+      .info_box_body
+        <span class="info_box_icon glyphicon glyphicon-usd"></span>
+        <span class="countUpMe" data-endval="#{@count[:offers]}">#{@count[:offers]}</span>
+      .info_box_footer
+        Open Offers
+.row.row_full.mHeight
+  .col-lg-6
+    .heading_a
+      %span.heading_text Activity
+    = column_chart @dashboard.activity_chart
+  .col-lg-6
+    .heading_a
+      %span.heading_text Progress
+    = column_chart @dashboard.progress_chart
