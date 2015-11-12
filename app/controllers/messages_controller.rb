@@ -41,10 +41,6 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  # GET /messages/:id/edit
-  def edit
-  end
-
   # POST /messages
   def create
     @context = SendMail.call(message_params)
@@ -65,19 +61,6 @@ class MessagesController < ApplicationController
     else
       flash.now[:message] = "Problem sending message: #{@context.message}"
       render :show
-    end
-  end
-
-  # PATCH/PUT /messages/:id
-  def update
-    respond_to do |format|
-      if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
-        format.json { render :show, status: :ok, location: @message }
-      else
-        format.html { render :edit }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
     end
   end
 

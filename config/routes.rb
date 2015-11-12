@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  get 'profile', to: 'devise/registrations#edit'
   get 'calendar', to: 'calendar#index'
   resources :companies
   resources :contacts
-  resources :messages do
+  resources :messages, except: [:edit, :update] do
     member do
       post '', action: 'respond', as: :response
     end

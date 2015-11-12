@@ -57,12 +57,10 @@
                 = gravatar_image_tag('contact@smartsearch.email', :alt => 'Smartsearch', :gravatar => { :size => 38 })
               %span.caret
             %ul.dropdown-menu.dropdown-menu-right
-              %li #{@current_user.nickname}@smartsearch.email
-              %li <a href="pages-user_profile.html">User Profile</a></li>
-              %li <a href="login_page.html">Log Out</a></li>
-          .search_section.hidden-sm.hidden-xs
-            <input type="text" class="form-control input-sm">
-            <button class="btn btn-link btn-sm" type="button"><span class="icon_search"></span></button>
+              %li= link_to 'User Profile', edit_user_registration_path
+              %li= link_to 'Log Out', destroy_user_session_path
+          .current_email.hidden-sm.hidden-xs
+            #{@current_user.nickname}@smartsearch.email
 
       %nav#breadcrumbs
         %ul

@@ -14,3 +14,12 @@
  *= require application/fullcalendar
  *= require application/main
  */
+
+#main_header .current_email {
+  float: right;
+  color: #eee;
+  display: inline-block;
+  margin-right: 20px;
+  margin-top: 15px;
+  position: relative;
+}

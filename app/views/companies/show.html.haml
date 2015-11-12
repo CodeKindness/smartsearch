@@ -5,7 +5,8 @@
     %p.user_profile_info= @company.address
     %p.user_profile_info= @company.website_url
   .col-sm-6.text-right
-    = link_to 'Edit Company', edit_company_path(@company), class: 'btn btn-primary'
+    = link_to 'Create Contact', new_contact_path, class: 'btn btn-primary'
+    = link_to 'Edit Company', edit_company_path(@company), class: 'btn btn-default'
 %hr
 .row
   .col-md-12
