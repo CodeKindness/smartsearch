@@ -4,3 +4,8 @@
 //= require 'application/summernote'
 //= require 'application/bootstrap-editable'
 //= require 'application/typeahead.js-bootstrap'
+
+#mailbox_table tr td {
+  line-height: 20px;
+  vertical-align: middle;
+}

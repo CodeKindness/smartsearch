@@ -2,6 +2,10 @@
   %td
   %td <div><input type="checkbox" class="msgSelect" value="#{message.slug}"></div>
   %td.mbox_star <i class="fa fa-star-o"></i>
-  %td= message.from
+  %td
+    = gravatar_image_tag(message.company.name, :alt => 'Company gravatar', :gravatar => { :size => 20 }) if message.company
+    = gravatar_image_tag(message.from, :alt => 'Message from gravatar', :gravatar => { :size => 20 })
+    &nbsp;
+    = message.from
   %td= link_to message.subject, message_path(message)
   %td= l message.originated_at, format: :long
