@@ -23,3 +23,68 @@
   margin-top: 15px;
   position: relative;
 }
+
+/* .modal-fullscreen */
+
+.modal-fullscreen {
+  background: transparent;
+}
+.modal-fullscreen .modal-dialog .modal-header .modal-title input {
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  padding: 0;
+  width: 50%;
+}
+.modal-fullscreen .modal-dialog .modal-content {
+  background: transparent;
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.modal-fullscreen .modal-dialog .modal-content .modal-body {
+  padding: 0;
+}
+.modal-fullscreen .modal-dialog .modal-content .modal-body textarea {
+  border: none;
+  height: 600px;
+  font-size: 20px;
+  line-height: 30px;
+  outline: none;
+  padding: 20px;
+  width: 100%;
+}
+.modal-fullscreen .modal-dialog .modal-content .modal-footer {
+  background: #fff;
+}
+.modal-backdrop.modal-backdrop-fullscreen {
+  background: #fff;
+}
+.modal-backdrop.modal-backdrop-fullscreen.in {
+  opacity: .97;
+  filter: alpha(opacity=97);
+}
+
+/* .modal-fullscreen size: we use Bootstrap media query breakpoints */
+
+.modal-fullscreen .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+//@media (min-width: 768px) {
+//  .modal-fullscreen .modal-dialog {
+//    width: 750px;
+//  }
+//}
+//@media (min-width: 992px) {
+//  .modal-fullscreen .modal-dialog {
+//    width: 970px;
+//  }
+//}
+//@media (min-width: 1200px) {
+//  .modal-fullscreen .modal-dialog {
+//    width: 1170px;
+//  }
+//}

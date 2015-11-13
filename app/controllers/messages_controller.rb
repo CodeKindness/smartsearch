@@ -52,6 +52,8 @@ class MessagesController < ApplicationController
     end
   end
 
+  # PUT /messages/:id/spam
+
   # POST /messages/:id
   def respond
     @context = SendMail.call(response_params)

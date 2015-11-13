@@ -19,3 +19,14 @@
 //= require application/jquery.matchHeight-min
 //= require application/jquery.mCustomScrollbar.concat.min
 //= require application/yukon_all.min
+
+$(function() {
+  $(".modal-fullscreen").on('show.bs.modal', function () {
+    setTimeout( function() {
+      $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+    }, 0);
+  });
+  $(".modal-fullscreen").on('hidden.bs.modal', function () {
+    $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+  });
+});
