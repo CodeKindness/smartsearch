@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114053920) do
+ActiveRecord::Schema.define(version: 20151114070313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ SELECT u.user_id,
     u.aggregateable_id,
     u.aggregateable_type,
     u.slug,
+    u.created_at,
     u.start_at,
     u.end_at,
     u.read_at,
@@ -134,6 +135,7 @@ SELECT u.user_id,
             events.id AS aggregateable_id,
             'Event'::text AS aggregateable_type,
             events.slug,
+            events.created_at,
             events.start_at,
             events.end_at,
             NULL::timestamp without time zone AS read_at,
@@ -150,6 +152,7 @@ SELECT u.user_id,
             messages.id AS aggregateable_id,
             'Message'::text AS aggregateable_type,
             messages.slug,
+            messages.created_at,
             messages.originated_at AS start_at,
             NULL::timestamp without time zone AS end_at,
             messages.read_at,
