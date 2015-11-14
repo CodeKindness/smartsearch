@@ -5,9 +5,9 @@ class EventsController < ApplicationController
     @event = current_user.events.new(event_params)
 
     if @event.save
-      redirect_to env['HTTP_REFERER'], notice: 'Company was successfully created.'
+      redirect_to env['HTTP_REFERER'], notice: 'Event was successfully created.'
     else
-      redirect_to env['HTTP_REFERER'], notice: "Issue creating event: #{@event.error_messages}"
+      redirect_to env['HTTP_REFERER'], error: "Problem creating event: #{@event.error_messages}"
     end
   end
 
