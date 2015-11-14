@@ -11,8 +11,8 @@ class DashboardController < ApplicationController
         companies: @current_user.companies.count,
         incoming: @current_user.messages.with_inbox_state.count,
         outgoing: @current_user.messages.with_sent_state.count,
-        interviews: 6,
-        offers: 2
+        interviews: @current_user.user_aggregates.where(event_type: 'Interview').count,
+        offers: @current_user.user_aggregates.where(event_type: 'Offer Letter').count
     }
   end
 end

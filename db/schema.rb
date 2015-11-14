@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114024629) do
+ActiveRecord::Schema.define(version: 20151114053920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,11 @@ ActiveRecord::Schema.define(version: 20151114024629) do
     t.string   "address"
     t.string   "website_url"
     t.string   "linkedin_url"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.boolean  "auto_assigns",       default: false
     t.integer  "primary_contact_id"
   end
-
   add_index "companies", ["primary_contact_id"], name: "index_companies_on_primary_contact_id", using: :btree
 
   create_table "companies_contacts", id: false, force: :cascade do |t|
@@ -70,19 +69,18 @@ ActiveRecord::Schema.define(version: 20151114024629) do
     t.datetime "end_at"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "slug"
   end
-
   add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
+    t.string   "slug",           null: false
+    t.integer  "sluggable_id",   null: false
     t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
   end
-
   add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
@@ -109,13 +107,59 @@ ActiveRecord::Schema.define(version: 20151114024629) do
     t.integer  "rgt"
     t.integer  "depth"
   end
-
   add_index "messages", ["company_id"], name: "index_messages_on_company_id", using: :btree
   add_index "messages", ["depth"], name: "index_messages_on_depth", using: :btree
   add_index "messages", ["lft"], name: "index_messages_on_lft", using: :btree
   add_index "messages", ["parent_id"], name: "index_messages_on_parent_id", using: :btree
   add_index "messages", ["rgt"], name: "index_messages_on_rgt", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_view "user_aggregates", <<-'END_VIEW_USER_AGGREGATES', :force => true
+SELECT u.user_id,
+    u.company_id,
+    u.contact_id,
+    u.aggregateable_id,
+    u.aggregateable_type,
+    u.slug,
+    u.start_at,
+    u.end_at,
+    u.read_at,
+    u.event_type,
+    u.highlight_color,
+    u.description,
+    u.workflow_state
+   FROM ( SELECT events.user_id,
+            events.company_id,
+            events.contact_id,
+            events.id AS aggregateable_id,
+            'Event'::text AS aggregateable_type,
+            events.slug,
+            events.start_at,
+            events.end_at,
+            NULL::timestamp without time zone AS read_at,
+            event_types.name AS event_type,
+            event_types.highlight_color,
+            events.description,
+            NULL::character varying AS workflow_state
+           FROM (events
+             LEFT JOIN event_types ON ((event_types.id = events.event_type_id)))
+        UNION
+         SELECT messages.user_id,
+            messages.company_id,
+            messages.contact_id,
+            messages.id AS aggregateable_id,
+            'Message'::text AS aggregateable_type,
+            messages.slug,
+            messages.originated_at AS start_at,
+            NULL::timestamp without time zone AS end_at,
+            messages.read_at,
+            'Message'::character varying AS event_type,
+            NULL::character varying AS highlight_color,
+            messages.subject AS description,
+            messages.workflow_state
+           FROM messages) u
+  ORDER BY u.start_at DESC
+  END_VIEW_USER_AGGREGATES
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -128,14 +172,13 @@ ActiveRecord::Schema.define(version: 20151114024629) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "name"
     t.integer  "role"
     t.string   "nickname"
     t.string   "time_zone"
   end
-
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

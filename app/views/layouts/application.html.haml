@@ -32,8 +32,8 @@
                     %small.text-muted 14.07.2014
                   %li
                     <a href="#" class="btn btn-xs btn-primary btn-block">All messages</a>
-            %li
-              <a href="#" data-toggle="modal" data-target="#modal-fullscreen"><i class="fa fa-edit"></i></a>
+            %li <a href="#" data-toggle="modal" data-target="#new-event-modal"><i class="fa fa-tasks"></i></a>
+            %li <a href="#" data-toggle="modal" data-target="#modal-fullscreen"><i class="fa fa-edit"></i></a>
           .header_user_actions.dropdown
             .dropdown-toggle.user_dropdown{ 'data-toggle': 'dropdown' }
               .user_avatar
@@ -70,6 +70,8 @@
               <a href="/calendar"><span class="first_level_icon"><i class="fa fa-calendar-o"></i></span><span class="menu-title">Calendar</span></a>
         .menu_toggle
           <span class="icon_menu_toggle"><i class="fa fa-angle-double-left toggle_left"></i><i class="fa fa-angle-double-right toggle_right" style="display:none"></i></span>
+
+  = render 'layouts/new_event_modal'
 
   .modal.modal-fullscreen.fade#modal-fullscreen{ tabindex: '-1', role: 'dialog', 'aria-labelledby': 'myModalLabel', 'aria-hidden': 'true' }
     .modal-dialog

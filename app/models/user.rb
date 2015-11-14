@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
   has_many :companies
   has_many :contacts
+  has_many :events
   has_many :messages
+  has_many :user_aggregates
 
   validates :nickname, presence: true, uniqueness: true
   validates :time_zone, presence: true

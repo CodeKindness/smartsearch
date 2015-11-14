@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = current_user.messages.with_inbox_state.order(originated_at: :desc)
+    @messages = current_user.user_aggregates.where(workflow_state: ['inbox',nil])
   end
 
   # GET /messages/sent

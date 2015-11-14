@@ -6,6 +6,7 @@ class Company < ActiveRecord::Base
   belongs_to :contact
   belongs_to :user
   has_many :messages
+  has_many :user_aggregates
 
   validates :user_id, presence: true
   validates :name, presence: true

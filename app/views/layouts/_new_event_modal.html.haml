@@ -1,0 +1,25 @@
+= simple_form_for Event.new, class: 'form-horizontal' do |f|
+  .modal.fade#new-event-modal{ tabindex: '-1', role: 'dialog', 'aria-labelledby': 'myModalLabel', 'aria-hidden': 'true' }
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{ type: 'button', 'data-dismiss': 'modal' }
+            %span{ 'aria-hidden': 'true' } &times;
+            %span.sr-only Close
+          %h4.modal-title New Event
+        .modal-body
+          .form-group
+            = f.select :event_type_id, EventType.all.map{|e|[e.name,e.id]}, { prompt: '-- Select Event Type --' }, class: 'form-control'
+          .form-group
+            = f.select :company_id, @current_user.companies.map{|e|[e.name,e.id]}, { prompt: '-- Select Company --' }, class: 'form-control'
+          .form-group
+            = f.select :contact_id, @current_user.contacts.map{|e|[e.full_name.blank? ? e.email : "#{e.full_name} <#{e.email}>",e.id]}, { prompt: '-- Select Contact --' }, { class: 'form-control', rows: '1' }
+          .form-group
+            = f.input :start_at
+          .form-group
+            = f.input :end_at
+          .form-group
+            = f.input :description, label: 'Description', as: :text, input_html: { class: 'form-control', :rows => 1}
+        .modal-footer
+          %button.btn.btn-default{ type: 'button', 'data-dismiss': 'modal' } Close
+          %button.btn.btn-primary{ type: 'submit' } Save

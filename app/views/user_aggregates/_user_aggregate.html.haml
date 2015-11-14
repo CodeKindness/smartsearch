@@ -1,0 +1,12 @@
+%tr{ class: message_class(user_aggregate) }
+  %td{ style: "background:#{user_aggregate.highlight_color};" }
+  %td <div><input type="checkbox" class="msgSelect" value="#{user_aggregate.id}"></div>
+  %td.mbox_star <i class="fa fa-star-o"></i>
+  %td
+    = link_to(gravatar_image_tag(user_aggregate.company.name, :alt => 'Company gravatar', :gravatar => { :size => 20 }), user_aggregate.company) if user_aggregate.company
+    = link_to(gravatar_image_tag(user_aggregate.contact.try(:email), :alt => 'Message from gravatar', :gravatar => { :size => 20 }), user_aggregate.contact) if user_aggregate.contact
+  %td
+    = user_aggregate.event_type
+    -#= user_aggregate.aggregateable_type == 'Event' ? user_aggregate.event_type : user_aggregate.contact.email
+  %td= user_aggregate.aggregateable_type == 'Event' ? user_aggregate.description : link_to(user_aggregate.description, user_aggregate.aggregateable)
+  %td= l user_aggregate.start_at, format: :long

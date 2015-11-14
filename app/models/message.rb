@@ -34,6 +34,7 @@ class Message < ActiveRecord::Base
   belongs_to :company
   belongs_to :contact
   belongs_to :user
+  has_many :user_aggregates, as: :aggregateable
 
   scope :unread, -> { where(read_at: nil) }
 

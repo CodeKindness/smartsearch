@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  get 'events/create'
-
-  get 'events/update'
-
+  resources :events, only: [:create, :update]
   get 'dashboard', to: 'dashboard#index'
   get 'profile', to: 'devise/registrations#edit'
   get 'calendar', to: 'calendar#index'

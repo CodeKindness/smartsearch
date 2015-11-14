@@ -5,6 +5,7 @@ class Contact < ActiveRecord::Base
   has_and_belongs_to_many :companies, join_table: 'companies_contacts'
   belongs_to :user
   has_many :messages
+  has_many :user_aggregates
 
   validates :user_id, presence: true
   validates :email, presence: true

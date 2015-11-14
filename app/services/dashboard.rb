@@ -4,7 +4,7 @@ class Dashboard
   end
 
   def activity_chart
-    Message.group_by_day(:created_at, format: '%b %e').count
+    @user.user_aggregates.group_by_day(:start_at, format: '%b %e').count
   end
 
   # @return [Hash]
