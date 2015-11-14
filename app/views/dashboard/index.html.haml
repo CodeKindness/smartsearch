@@ -33,6 +33,7 @@
     .heading_a
       %span.heading_text Activity
     = column_chart @dashboard.activity_chart
+    = render 'activity_table'
   .col-lg-6
     .heading_a
       %span.heading_text Progress

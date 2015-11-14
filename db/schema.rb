@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114070313) do
+ActiveRecord::Schema.define(version: 20151114080910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,28 +37,6 @@ ActiveRecord::Schema.define(version: 20151114070313) do
     t.integer "contact_id", null: false
   end
 
-  create_table "contacts", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "email"
-    t.integer  "company_id"
-    t.string   "position"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.string   "slug"
-    t.string   "phone_number"
-    t.string   "linkedin_url"
-  end
-
-  create_table "event_types", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "name"
-    t.string   "highlight_color"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "company_id"
@@ -73,18 +51,6 @@ ActiveRecord::Schema.define(version: 20151114070313) do
   end
   add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
-
-  create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",           null: false
-    t.integer  "sluggable_id",   null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
-    t.datetime "created_at"
-  end
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
@@ -113,6 +79,60 @@ ActiveRecord::Schema.define(version: 20151114070313) do
   add_index "messages", ["parent_id"], name: "index_messages_on_parent_id", using: :btree
   add_index "messages", ["rgt"], name: "index_messages_on_rgt", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_view "company_activities", <<-'END_VIEW_COMPANY_ACTIVITIES', :force => true
+SELECT u.user_id,
+    u.company_id,
+    companies.name,
+    count(*) AS aggregate_count,
+    ((count(*))::double precision / (date_part('day'::text, age(now(), (companies.created_at)::timestamp with time zone)) + (1)::double precision)) AS activity
+   FROM (( SELECT events.user_id,
+            events.company_id,
+            events.created_at
+           FROM events
+        UNION
+         SELECT messages.user_id,
+            messages.company_id,
+            messages.created_at
+           FROM messages) u
+     LEFT JOIN companies ON ((companies.id = u.company_id)))
+  WHERE (u.company_id IS NOT NULL)
+  GROUP BY u.user_id, u.company_id, companies.name, companies.created_at
+  END_VIEW_COMPANY_ACTIVITIES
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.integer  "company_id"
+    t.string   "position"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "slug"
+    t.string   "phone_number"
+    t.string   "linkedin_url"
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "highlight_color"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",           null: false
+    t.integer  "sluggable_id",   null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_view "user_aggregates", <<-'END_VIEW_USER_AGGREGATES', :force => true
 SELECT u.user_id,
