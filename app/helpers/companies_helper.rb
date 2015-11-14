@@ -10,4 +10,12 @@ module CompaniesHelper
     end
     result.join(' ')
   end
+
+  def contact_companies(contact)
+    if contact.companies.any?
+      contact.companies.map(&:name).join(', ')
+    else
+      'NA'
+    end
+  end
 end

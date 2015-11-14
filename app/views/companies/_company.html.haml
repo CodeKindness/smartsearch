@@ -1,6 +1,7 @@
-%li.contact_item{ 'data-groups': '["Goodwin-Friesen"]', 'data-name': 'Prof. Theron Buckridge', 'data-company': 'Goodwin-Friesen' }
+%li.contact_item{ 'data-groups': "[\"#{company.name}\"]", 'data-name': company.name, 'data-address': (company.address.present? ? company.address : 'zzzz'), 'data-rating': company.rating || 0 }
   = link_to company do
     = gravatar_image_tag 'contact@smartsearch.email', class: 'img-circle', :alt => 'Company', :gravatar => { :size => 38 }
     %span.contact_content
       %h2= company.name
-      %span.text-muted!= rating_guide(company.rating)
+      %span.text-muted= company.address.present? ? company.address : 'NA'
+      %small.text-muted!= rating_guide(company.rating)

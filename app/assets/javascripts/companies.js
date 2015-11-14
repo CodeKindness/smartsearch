@@ -14,20 +14,7 @@ $(function() {
     var sort = this.value,
         opts = {};
 
-    if (sort === 'company') {
-      opts = {
-        by: function ($el) {
-          return $el.data('company');
-        }
-      };
-    } else if (sort === 'company_desc') {
-      opts = {
-        reverse: true,
-        by: function ($el) {
-          return $el.data('company').toLowerCase();
-        }
-      };
-    } else if (sort === 'name') {
+    if (sort === 'name') {
       opts = {
         by: function ($el) {
           return $el.data('name').toLowerCase();
@@ -40,17 +27,30 @@ $(function() {
           return $el.data('name').toLowerCase();
         }
       };
-    } else if (sort === 'email') {
+    } else if (sort === 'address') {
       opts = {
         by: function ($el) {
-          return $el.data('email').toLowerCase();
+          return $el.data('address').toLowerCase();
         }
       };
-    } else if (sort === 'email_desc') {
+    } else if (sort === 'address_desc') {
       opts = {
         reverse: true,
         by: function ($el) {
-          return $el.data('email').toLowerCase();
+          return $el.data('address').toLowerCase();
+        }
+      };
+    } else if (sort === 'rank') {
+      opts = {
+        by: function ($el) {
+          return $el.data('rank');
+        }
+      };
+    } else if (sort === 'rank_desc') {
+      opts = {
+        reverse: true,
+        by: function ($el) {
+          return $el.data('rank');
         }
       };
     }

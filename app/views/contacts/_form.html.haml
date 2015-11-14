@@ -3,10 +3,10 @@
   %h3.heading_a
     %span.heading_text Company info
   .form-group
-    = f.label :company_id, class: 'col-sm-2 control-label'
+    = f.label :company_ids, 'Companies', class: 'col-sm-2 control-label'
     .col-sm-10
       -#Should be able to use: @current_user.companies?
-      = f.input_field :company_id, collection: [['McDonalds',1]], include_blank: false, prompt: '-- Select Company --', class: 'form-control'
+      = f.input_field :company_ids, as: :check_boxes, collection: @current_user.companies, include_blank: false, prompt: '-- Select Company --', class: ''
   .form-group
     = f.label :position, class: 'col-sm-2 control-label'
     .col-sm-10

@@ -2,7 +2,7 @@ class Contact < ActiveRecord::Base
   extend FriendlyId
   friendly_id :token
 
-  has_and_belongs_to_many :companies, join_table: :companies_contacts
+  has_and_belongs_to_many :companies, join_table: 'companies_contacts'
   belongs_to :user
   has_many :messages
 

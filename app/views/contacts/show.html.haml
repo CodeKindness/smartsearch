@@ -2,8 +2,8 @@
   .col-sm-6
     = gravatar_image_tag @contact.email, alt: @contact.first_name, gravatar: { size: 76 }, class: 'user_profile_img'
     %h1.user_profile_name= @contact.full_name
-    %p.user_profile_info= @contact.position
-    %p.user_profile_info= @contact.company_id
+    %p.user_profile_info= "#{@contact.position} at #{@contact.companies.map(&:name).join(' / ')}"
+    %p.user_profile_info= @contact.email
   .col-sm-6.text-right
     = link_to 'Message Contact', new_message_path(to: @contact.email), class: 'btn btn-primary'
     = link_to 'Edit Contact', edit_contact_path(@contact), class: 'btn btn-default'
