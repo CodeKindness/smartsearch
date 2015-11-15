@@ -35,7 +35,7 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(http://ironsummitmedia.github.io/startbootstrap-landing-page/img/intro-bg.jpg) no-repeat center center;
+    background: linear-gradient(rgba(27, 98, 145, 0.20), rgba(7, 98, 145, 0.20)), url(/images/excited-header.jpg) no-repeat center center;
     background-size: cover;
 }
 
@@ -116,7 +116,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
-    background: url(http://ironsummitmedia.github.io/startbootstrap-landing-page/img/banner-bg.jpg) no-repeat center center;
+    background: linear-gradient(rgba(27, 98, 145, 0.20), rgba(7, 98, 145, 0.20)), url(/images/helmet-banner.jpg) no-repeat center center;
     background-size: cover;
 }
 
