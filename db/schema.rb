@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114080910) do
+ActiveRecord::Schema.define(version: 20151114225346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,39 +100,15 @@ SELECT u.user_id,
   GROUP BY u.user_id, u.company_id, companies.name, companies.created_at
   END_VIEW_COMPANY_ACTIVITIES
 
-  create_table "contacts", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "email"
-    t.integer  "company_id"
-    t.string   "position"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.string   "slug"
-    t.string   "phone_number"
-    t.string   "linkedin_url"
-  end
-
   create_table "event_types", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
     t.string   "highlight_color"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "order"
   end
-
-  create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",           null: false
-    t.integer  "sluggable_id",   null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
-    t.datetime "created_at"
-  end
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  add_index "event_types", ["order"], name: "index_event_types_on_order", using: :btree
 
   create_view "user_aggregates", <<-'END_VIEW_USER_AGGREGATES', :force => true
 SELECT u.user_id,
@@ -183,6 +159,44 @@ SELECT u.user_id,
            FROM messages) u
   ORDER BY u.start_at DESC
   END_VIEW_USER_AGGREGATES
+
+  create_view "company_progresses", <<-'END_VIEW_COMPANY_PROGRESSES', :force => true
+SELECT companies.id,
+    companies.user_id,
+    companies.slug,
+    companies.name,
+    COALESCE(user_aggregates.event_type, 'Pending'::character varying) AS event_type,
+    count(user_aggregates.event_type) AS count
+   FROM (companies
+     LEFT JOIN user_aggregates ON ((user_aggregates.company_id = companies.id)))
+  GROUP BY user_aggregates.event_type, companies.name, companies.id
+  END_VIEW_COMPANY_PROGRESSES
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.integer  "company_id"
+    t.string   "position"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "slug"
+    t.string   "phone_number"
+    t.string   "linkedin_url"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",           null: false
+    t.integer  "sluggable_id",   null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

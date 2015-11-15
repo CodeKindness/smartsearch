@@ -14,6 +14,6 @@ class Dashboard
 
   # @return [Hash]
   def progress_chart
-    @user.messages.group(:workflow_state).count
+    @user.company_progresses.group(:event_type).order(CompanyProgress.custom_order).sum(:count)
   end
 end

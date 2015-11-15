@@ -5,3 +5,26 @@
 #activity-table {
   margin-top: 5px;
 }
+
+#progress-table {
+  background: #fff;
+  margin-top: 5px;
+}
+
+#progress-table .header {
+  padding: 5px;
+  border-bottom: 1px solid #E1E5E6;
+}
+
+#progress-table .content {
+  padding: 5px;
+}
+
+#progress-table .content .panel {
+  font-size: 10px;
+}
+
+#progress-table .content a {
+  display: inline-block;
+  margin: 5px 5px 0 0;
+}

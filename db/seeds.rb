@@ -10,17 +10,25 @@
 # puts 'CREATED USER FOR: michael@smartsearch.email'
 
 EventType.create [
-    {
-        name: 'Interview',
-        highlight_color: '#F7BC31'
-    }, {
-         name: 'Skills Assessment',
-         highlight_color: '#2DBD9B'
-    }, {
-         name: 'Drug Screen',
-         highlight_color: '#9C22C0'
-    }, {
+     {
          name: 'Offer Letter',
-         highlight_color: '#4687DF'
+         highlight_color: '#4687DF',
+         order: 1
+     }, {
+         name: 'Interview',
+         highlight_color: '#F7BC31',
+         order: 2
+     }, {
+         name: 'Skills Assessment',
+         highlight_color: '#2DBD9B',
+         order: 3
+     }, {
+         name: 'Drug Screen',
+         highlight_color: '#9C22C0',
+         order: 4
+     }, {
+         name: 'Applied',
+         highlight_color: '#C19D02',
+         order: 5
     }
 ]

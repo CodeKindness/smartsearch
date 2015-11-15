@@ -29,4 +29,8 @@ $(function() {
   $(".modal-fullscreen").on('hidden.bs.modal', function () {
     $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
   });
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 });

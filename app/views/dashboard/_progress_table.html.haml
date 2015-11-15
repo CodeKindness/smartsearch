@@ -1,0 +1,17 @@
+- progress = progress_hash(@current_user.company_progresses)
+.row
+  .col-md-12
+    #progress-table
+      .row
+        .col-sm-3
+          .header.text-muted Pending
+          .content!= progress_images(progress[:pending])
+        .col-sm-3
+          .header.text-danger Contact
+          .content!= progress_images(progress[:message])
+        .col-sm-3
+          .header.text-warning Event
+          .content!= progress_images(progress[:event])
+        .col-sm-3
+          .header.text-success Offer
+          .content!= progress_images(progress[:offer])
