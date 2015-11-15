@@ -1,13 +1,9 @@
 module DashboardHelper
-  def company_activity_ratio(company)
-    (company.activity.to_f * 100.0).round(0)
-  end
-
   def company_activity_progress(company)
     case
-    when company_activity_ratio(company) >= 57
+    when company.activity >= 57
       return 'success'
-    when company_activity_ratio(company) >= 28
+    when company.activity >= 28
       return 'warning'
     else
       return 'danger'
@@ -28,7 +24,7 @@ module DashboardHelper
   def progress_images(progress_companies)
     result = ''
     progress_companies.each do |company|
-      result += link_to gravatar_image_tag('smartsearch@smartsearch.com', :alt => 'Company gravatar', :gravatar => { :size => 40 }), company_path(company.id), 'data-toggle': 'tooltip', 'data-placement': 'left', title: company.name
+      result += link_to gravatar_image_tag('smartsearch@smartsearch.com', :alt => 'Company gravatar', :gravatar => { :size => 40 }), company_path(company.slug), 'data-toggle': 'tooltip', 'data-placement': 'left', title: company.name
     end
     result
   end

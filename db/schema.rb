@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151114225346) do
+ActiveRecord::Schema.define(version: 20151115021711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,12 +81,13 @@ ActiveRecord::Schema.define(version: 20151114225346) do
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_view "company_activities", <<-'END_VIEW_COMPANY_ACTIVITIES', :force => true
-SELECT u.user_id,
-    u.company_id,
+SELECT companies.user_id,
+    companies.id,
+    companies.slug,
     companies.name,
-    count(*) AS aggregate_count,
-    ((count(*))::double precision / (date_part('day'::text, age(now(), (companies.created_at)::timestamp with time zone)) + (1)::double precision)) AS activity
-   FROM (( SELECT events.user_id,
+    (((count(u.*))::double precision / abs((date_part('epoch'::text, (now() - (companies.created_at)::timestamp with time zone)) / (86400)::double precision))) * (100)::double precision) AS activity
+   FROM (companies
+     LEFT JOIN ( SELECT events.user_id,
             events.company_id,
             events.created_at
            FROM events
@@ -94,10 +95,9 @@ SELECT u.user_id,
          SELECT messages.user_id,
             messages.company_id,
             messages.created_at
-           FROM messages) u
-     LEFT JOIN companies ON ((companies.id = u.company_id)))
-  WHERE (u.company_id IS NOT NULL)
-  GROUP BY u.user_id, u.company_id, companies.name, companies.created_at
+           FROM messages) u ON ((companies.id = u.company_id)))
+  GROUP BY companies.id, companies.user_id, companies.name, companies.created_at
+  ORDER BY (((count(u.*))::double precision / abs((date_part('epoch'::text, (now() - (companies.created_at)::timestamp with time zone)) / (86400)::double precision))) * (100)::double precision) DESC
   END_VIEW_COMPANY_ACTIVITIES
 
   create_table "event_types", force: :cascade do |t|

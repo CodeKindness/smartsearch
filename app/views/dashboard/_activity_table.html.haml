@@ -2,9 +2,9 @@
   - @current_user.company_activities.order(activity: :desc).each do |company|
     %li.list-group-item
       .row
-        .col-md-6= link_to company.name, company_path(company.company)
+        .col-md-6= link_to company.name, company_path(company.slug)
         .col-md-6
           .progress
-            .progress-bar{ class: "progress-bar-#{company_activity_progress(company)}", style: "width: #{company_activity_ratio(company)}%" }
+            .progress-bar{ class: "progress-bar-#{company_activity_progress(company)}", style: "width: #{company.activity.round(0)}%" }
               %span.sr-only
-                #{company_activity_ratio(company)}% Complete
+                #{company.activity.round(0)}% Complete
